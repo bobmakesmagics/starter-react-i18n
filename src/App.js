@@ -1,11 +1,34 @@
 import './App.css';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+const locales = {
+  en: { title: 'English' },
+  es: { title: 'Español' },
+};
 
 function App() {
   const { t, i18n } = useTranslation();
+  const [messages, setMessages] = useState(0);
+
   return (
     <div>
+      <ul>
+        {Object.keys(locales).map((locale) => (
+          <li key={locale}>
+            <button
+              style={{
+                fontWeight:
+                  i18n.resolvedLanguage === locale ? 'bold' : 'normal',
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(locale)}
+            >
+              {locales[locale].title}
+            </button>
+          </li>
+        ))}
+      </ul>
       <h1>{t('main.header')}</h1>
     </div>
   );
