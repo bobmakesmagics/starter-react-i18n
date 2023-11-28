@@ -1,22 +1,25 @@
 import './App.css';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
-
-const options = [
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Español' },
-];
+import { getLanguage } from './utils';
 
 function App() {
   const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState(0);
+  const [languageOptions, setLanguageOptions] = useState([]);
+
+  useEffect(() => {
+    setLanguageOptions(
+      i18n.languages.map((lang) => ({ value: lang, label: getLanguage(lang) }))
+    );
+  }, [i18n]);
 
   return (
     <div className="App">
       <Select
-        options={options}
-        defaultValue={options[0]}
+        options={languageOptions}
+        defaultValue={{ value: 'en', label: getLanguage('en') }}
         onChange={(opt) => i18n.changeLanguage(opt.value)}
       />
       <h1>{t('main.header')}</h1>
