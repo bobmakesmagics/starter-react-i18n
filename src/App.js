@@ -30,6 +30,8 @@ function App() {
         ))}
       </ul>
       <h1>{t('main.header')}</h1>
+      <button onClick={() => setMessages(messages + 1)}>+1 message</button>
+      <p>{t('main.new_messages', { count: messages })}</p>
     </div>
   );
 }
